@@ -7,24 +7,27 @@ You can use these scripts instead of SecureCRT, xshell.
 
 Refer to [ssh-auto-login](https://github.com/liaohuqiu/ssh-auto-login) and [sshgo](https://github.com/emptyhua/sshgo).
 
+**!just support python2.7.x now!!**
+
 ### How to use
-1. `git clone https://github.com/upton/ssh-auto-login-manage`
-2. Modify file `/path/to/ssh-auto-login-manage/hosts`, use your hosts, you can set the special username & password for each hostname, split with blankspace. Will use the default username & password that defined in the `/path/to/ssh-auto-login-manage/login.sh` file if the hostname without username & password :
+1. `git clone https://github.com/orangle/ssh-auto-login-for-macos.git`
+
+2. Modify file `/path/to/ssh-auto-login-manage/hosts.example` to `/path/to/ssh-auto-login-manage/hosts`, use your hosts, you can set the special username & password for each hostname, split with blankspace. Will use the default username & password that defined in the `/path/to/ssh-auto-login-manage/login.sh` file if the hostname without username & password :
 
     ```
     deploy
         1.1.1.0  user1  password1
         1.1.1.1
-        2.2.2.2
-        3.3.3.3  user2  password2
-        4.4.4.4:2509 user2 
+        3.3.3.3  user2
+        cn-bj-office|4.4.4.4:2509 user3 password3
     Online
         login1.gateway.net user3 password3
         login2.gateway.net
     ```
 
-* 支持免密码登录(不设置密码时候)
-* 支持自定义端口号
+* support key login(when the password set empty)
+* support custom port number
+* support alias name, using `|` as separator
 
 3. Modify file `/path/to/ssh-auto-login-manage/login.sh`, use your own default username and password for hostname that not set in hosts file:
  - user="admin"

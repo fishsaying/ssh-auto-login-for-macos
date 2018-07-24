@@ -107,7 +107,6 @@ class SSHGO:
         nodes_pool = []
         line_number = 0;
 
-
         for line in open(config_file, 'r'):
             line_number += 1
             line_con = line.strip()
@@ -330,19 +329,18 @@ class SSHGO:
             node['expanded'] = not node['expanded']
         else:
             self.restore_screen()
-
-            #ssh = 'ssh'
-            #if os.popen('which zssh 2> /dev/null').read().strip() != '':
-            #    ssh = 'zssh'
-
             # run script instead of 'ssh'
             ssh = script
 
-            host_info = re.split(':', node['line'].strip())
+            host_line = node['line'].strip()
+            alias_info = host_line.split('|')
+            if len(alias_info) == 2:
+                host_line = alias_info[1].strip()
+            host_info = re.split(':', host_line)
 
             port = '22'
             host = ''
-
+            # print >>sys.stderr, host_line, alias_info 
             if len(host_info) == 2 :
                 host = host_info[0]
                 port = host_info[1]
@@ -350,7 +348,6 @@ class SSHGO:
                 host = host_info[0]
 
             exe_args = [ssh, host, port, node['user'], node['password']]
-            
             os.execvp(ssh, exe_args)
 
     def render_screen(self):
