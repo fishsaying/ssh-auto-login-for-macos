@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-import os,sys,re
+from __future__ import print_function
+import os
+import sys
+import re
 import curses
 import locale
 import math
@@ -14,15 +16,14 @@ sshHosts = sys.path[0] + "/hosts"
 
 def _assert(exp, err):
     if not exp:
-        print >>sys.stderr,err
+        eprint(str(err))
         sys.exit(1)
 
 def _dedup(ls):
     table = {}
     for item in ls:
         table[item] = None
-    ls_dedup = table.keys()
-    ls_dedup.sort()
+    ls_dedup = sorted(table.keys())
     return ls_dedup
 
 def _get_known_hosts():
@@ -48,6 +49,11 @@ def _get_known_hosts():
     finally:
         fp.close()
     return _dedup(hosts)
+
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
 
 class SSHGO:
 
@@ -340,7 +346,6 @@ class SSHGO:
 
             port = '22'
             host = ''
-            # print >>sys.stderr, host_line, alias_info 
             if len(host_info) == 2 :
                 host = host_info[0]
                 port = host_info[1]
@@ -406,7 +411,7 @@ class SSHGO:
                 self.screen.addstr(index, 0, prefix, curses.color_pair(self.COLOR_RED_HIGH))
                 self.screen.addstr(index, len(prefix), line, curses.color_pair(self.COLOR_HIGHLIGHT))
         #render scroll bar
-        for i in xrange(screen_lines):
+        for i in range(screen_lines):
             self.screen.addstr(i, screen_cols - 2, '|', curses.color_pair(self.COLOR_WBG))
 
         scroll_top = int(math.ceil((self.top_line_number + 1.0) / max(len(all_nodes), screen_lines) * screen_lines - 1))
@@ -456,12 +461,12 @@ if __name__ == '__main__':
     parser.add_option('-c', '--config', help='use specified config file instead of hosts')
     options, args = parser.parse_args(sys.argv)
     host_file = os.path.expanduser(sshHosts)
-    print 'Use host file : ' + host_file
+    eprint('host file path is ' + host_file)
 
     if options.config is not None:
         host_file = options.config
     if not os.path.exists(host_file):
-        print >>sys.stderr,'hosts is not found, create it'
+        eprint('hosts is not found, create it')
         fp = open(host_file, 'w')
         fp.close()
 

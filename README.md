@@ -7,7 +7,7 @@ You can use these scripts instead of SecureCRT, xshell.
 
 Refer to [ssh-auto-login](https://github.com/liaohuqiu/ssh-auto-login) and [sshgo](https://github.com/emptyhua/sshgo).
 
-**!just support python2.7.x now!!**
+~~**!just support python2.7.x now!!**~~ python2.7, 3.6下都能使用，只依赖标准库
 
 ### How to use
 1. `git clone https://github.com/orangle/ssh-auto-login-for-macos.git`
